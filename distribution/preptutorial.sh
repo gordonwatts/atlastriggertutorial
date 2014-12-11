@@ -3,6 +3,12 @@
 # Setup a fresh directory for the trigger tutorial.
 #
 
+rel=2.2.X,rel_2
+if [ $# -ge 1 ]
+then
+  rel=$1
+fi
+
 # Config for asetup... have to do this funny
 # since setupATLAS isn't passed in, but this is what setupATLASf
 # does (when not run via a source command in bash).
@@ -12,7 +18,7 @@ source $ATLAS_LOCAL_ROOT_BASE/user/atlasLocalSetup.sh
 # Initial Config
 mkdir trigtut
 cd trigtut
-rcSetup Base,2.2.X,rel_4
+rcSetup Base,$rel
 
 # Get the release setup properly so we have the packages we need.
 # The versionless pacakge tags aren't in yet... Assume the packages

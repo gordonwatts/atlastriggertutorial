@@ -4,6 +4,13 @@
 # will have to check the output - this isn't a stand alone test.
 #
 
+rel=2.2.X,rel_2
+if [ $# -ge 1 ]
+then
+  rel=$1
+fi
+echo "Using release $rel"
+
 # Config for asetup... have to do this funny
 # since setupATLAS isn't passed in, but this is what setupATLAS
 # does...
@@ -21,14 +28,14 @@ cp ../distribution/* .
 # Now, run the prep.
 #
 
-./preptutorial.sh
+./preptutorial.sh $rel
 
 #
 # Now, get in there and setup
 #
 
 cd trigtut
-rcSetup Base,2.2.X,rel_4
+rcSetup Base,$rel
 
 #
 # Next create the package, and copy over the trigger tutorial root core file.
