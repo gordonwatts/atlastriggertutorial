@@ -1,0 +1,39 @@
+#
+# Setup a fresh directory for the trigger tutorial.
+#
+
+# Config for asetup... have to do this funny
+# since setupATLAS isn't passed in, but this is what setupATLASf
+# does (when not run via a source command in bash).
+
+source $ATLAS_LOCAL_ROOT_BASE/user/atlasLocalSetup.sh
+
+# Initial Config
+mkdir trigtut
+cd trigtut
+rcSetup Base,2.2.X,rel_4
+
+# Get the release setup properly so we have the packages we need.
+# The versionless pacakge tags aren't in yet...
+cat > packages.txt <<EOF
+# Missing versions
+atlasoff/Event/xAOD/xAODTrigger/tags/xAODTrigger-00-00-30
+atlasoff/Event/xAOD/xAODTracking/tags/xAODTracking-00-13-01
+atlasoff/Event/xAOD/xAODTrigMissingET/tags/xAODTrigMissingET-00-00-15
+
+# Trigger stuff not in release yet
+atlasoff/Trigger/TrigConfiguration/TrigConfxAOD/tags/TrigConfxAOD-00-00-10
+atlasoff/Trigger/TrigAnalysis/TrigDecisionTool/tags/TrigDecisionTool-00-02-18-11
+atlasoff/Trigger/TrigEvent/TrigNavStructure/tags/TrigNavStructure-00-00-06
+
+# And the package that we are going to modify
+#atlasoff/Control/AthToolSupport/AsgExampleTools/trunk
+EOF
+rc checkout packages.txt
+
+# Move the source file over we want to use
+cp ../AOD.pool.root .
+
+# Now build everything
+rc find_packages
+rc compile
