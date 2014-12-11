@@ -80,7 +80,7 @@ int main( int argc, char* argv[] ) {
     auto eleFeatureContainers = fc.containerFeature<TrigElectronContainer>();
     hNContainers->Fill(eleFeatureContainers.size());
     cout << "Looking at features for the event: " << endl;
-    for(auto econt : eleFeatureContainers) {
+    for(auto &econt : eleFeatureContainers) {
       cout << "  -> TrigElectronContainer: " << econt.label() << endl;
       for (auto e : *econt.cptr()) {
 	hElePt->Fill(e->pt()/1000.0);
