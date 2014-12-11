@@ -1,3 +1,4 @@
+#!/bin/env bash
 #
 # Test the trigger tutorial and make sure it still works. You
 # will have to check the output - this isn't a stand alone test.
