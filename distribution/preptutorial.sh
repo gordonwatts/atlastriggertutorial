@@ -1,3 +1,4 @@
+#!/bin/env bash
 #
 # Setup a fresh directory for the trigger tutorial.
 #
