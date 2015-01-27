@@ -4,7 +4,7 @@
 # will have to check the output - this isn't a stand alone test.
 #
 
-rel=2.0.24
+rel=2.2.2
 if [ $# -ge 1 ]
 then
   rel=$1
