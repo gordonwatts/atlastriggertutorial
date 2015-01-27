@@ -3,7 +3,7 @@
 # Setup a fresh directory for the trigger tutorial.
 #
 
-rel=2.2.X,rel_2
+rel=2.0.24
 if [ $# -ge 1 ]
 then
   rel=$1
