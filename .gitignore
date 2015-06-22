@@ -1,4 +1,6 @@
 *~
 experiment/
+experimental/
 test/
+data/
 *.tar.gz
