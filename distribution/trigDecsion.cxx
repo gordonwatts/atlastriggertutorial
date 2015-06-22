@@ -29,6 +29,8 @@ const char* OUTPUT_FILE = "trigDecsion.root";
 // Helpers
 TChain *getFilesFromCommandLine(int argc, char* argv[]);
 void dumpTriggerInfo(TrigDecisionTool &trigDecisionTool);
+void accumulateTriggerInfo(TrigDecisionTool &trigDecTool,
+			   map<string,int> &trigPassedCounts);
 
 int main( int argc, char* argv[] ) {
 
@@ -66,6 +68,9 @@ int main( int argc, char* argv[] ) {
     return 1;
   }
 
+  // Keep track of what passed
+  map<string,int> passedByTrigger;
+
   auto hEventCounter = new TH1F("eventCounter", "Number of Events Processed", 1, 0.0, 1.0);
   auto hLevelPassed = new TH1F("passEvents", "Events passing each level", 4, 0.0, 4.0);
   hLevelPassed->GetXaxis()->SetBinLabel(1, "L1");
@@ -91,6 +96,7 @@ int main( int argc, char* argv[] ) {
     if (trigDecTool.isPassed("HLT_.*"))
       hLevelPassed->Fill(3.5);
 
+    accumulateTriggerInfo(trigDecTool, passedByTrigger);
     if (entry == 1) {
       dumpTriggerInfo(trigDecTool);
     }
@@ -98,6 +104,14 @@ int main( int argc, char* argv[] ) {
 
   outputFile->Write();
   outputFile->Close();
+
+  // Dump out trigger fired counts
+  cout << "Trigger passing: " << endl;
+  for(auto &trigpair : passedByTrigger) {
+    cout << "  " << trigpair.first
+	 << " -> " << trigpair.second << " fires"
+	 << endl;
+  }
 }
 
 // Dump out all chains in an event
@@ -106,6 +120,17 @@ void dumpTriggerInfo(TrigDecisionTool &trigDecTool) {
   auto chainGroups = trigDecTool.getChainGroup(".*");
   for(auto &trig : chainGroups->getListOfTriggers()) {
     cout << "  " << trig << endl;
+  }
+}
+
+void accumulateTriggerInfo(TrigDecisionTool &trigDecTool,
+			   map<string,int> &trigPassedCounts)
+{
+  auto chainGroups = trigDecTool.getChainGroup(".*");
+  for(auto &trig : chainGroups->getListOfTriggers()) {
+    if (trigDecTool.isPassed(trig)) {
+      trigPassedCounts[trig] += 1;
+    }
   }
 }
 
