@@ -75,7 +75,7 @@ int main( int argc, char* argv[] ) {
     event.getEntry(entry);
 
     // Get a chain group that represents the HLT trigger.
-    auto cg = trigDecTool.getChainGroup("HLT_e25_etcut");
+    auto cg = trigDecTool.getChainGroup("HLT_e24_tight_iloose");
     auto fc = cg->features();
     auto eleFeatureContainers = fc.containerFeature<TrigElectronContainer>();
     hNContainers->Fill(eleFeatureContainers.size());
